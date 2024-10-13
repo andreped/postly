@@ -3,4 +3,4 @@ isort
 black
 pydantic
 pytest
-altair==4.2.2
+altair<5
