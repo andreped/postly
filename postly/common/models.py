@@ -1,6 +1,7 @@
 from dataclasses import dataclass
-from pydantic import BaseModel
 from typing import List
+
+from pydantic import BaseModel
 
 
 class StrictPost(BaseModel):

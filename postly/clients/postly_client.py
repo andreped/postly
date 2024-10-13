@@ -54,13 +54,13 @@ class PostlyClient:
         """
         if user_name not in self.userPosts:
             raise KeyError(f"User {user_name} not found.")
-        
+
         if len(post_text) > self.post_max_length:
             raise RuntimeError("Post is too long")
 
         if not post_text.strip():
             raise ValueError("Post cannot be empty.")
-        
+
         if not isinstance(timestamp, int) or timestamp < 0:
             raise ValueError("Timestamp must be a non-negative integer.")
 
@@ -80,7 +80,7 @@ class PostlyClient:
         """
         if user_name not in self.userPosts:
             raise KeyError(f"User '{user_name}' not found.")
-        
+
         self.userPosts.pop(user_name, None)
 
     def get_posts_for_user(self, user_name: str) -> List[str]:
@@ -94,7 +94,7 @@ class PostlyClient:
         """
         if user_name not in self.userPosts:
             raise KeyError(f"User '{user_name} not found.")
-        
+
         return [post_data.content for post_data in self.userPosts[user_name][::-1]]
 
     def get_posts_for_topic(self, topic: str) -> List[str]:
@@ -126,13 +126,13 @@ class PostlyClient:
         """
         if not isinstance(from_timestamp, int) or from_timestamp < 0:
             raise ValueError("from_timestamp must be a non-negative integer.")
-        
+
         if not isinstance(to_timestamp, int) or to_timestamp < 0:
             raise ValueError("to_timestamp must be a non-negative integer.")
-        
+
         if from_timestamp > to_timestamp:
             raise ValueError("from_timestamp cannot be greater than to_timestamp.")
-        
+
         # construct topic histogram
         topics_frequency = Counter()
         for user in self.userPosts:
