@@ -3,4 +3,4 @@ isort
 black
 pydantic
 pytest
-streamlit
+altair==4.2.2
