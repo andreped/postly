@@ -1,12 +1,8 @@
 import streamlit as st
+from postly.clients.singleton_client import SingletonPostlyClient
 
-from postly.clients.postly_client import PostlyClient
-
-# Initialize the PostlyClient in Streamlit's session state
-if "client" not in st.session_state:
-    st.session_state.client = PostlyClient()
-
-client = st.session_state.client
+# Initialize the PostlyClient singleton
+client = SingletonPostlyClient.get_instance()
 
 # Initialize user session state
 if "logged_in" not in st.session_state:
