@@ -1,11 +1,13 @@
 import streamlit as st
+
 from postly.clients.postly_client import PostlyClient
 
 # Initialize the PostlyClient in Streamlit's session state
-if 'client' not in st.session_state:
+if "client" not in st.session_state:
     st.session_state.client = PostlyClient()
 
 client = st.session_state.client
+
 
 def add_user():
     st.title("Add User")
@@ -13,6 +15,7 @@ def add_user():
     if st.button("Add User"):
         client.add_user(user_name)
         st.success(f"User '{user_name}' added successfully.")
+
 
 def add_post():
     st.title("Add Post")
@@ -26,9 +29,11 @@ def add_post():
         except Exception as e:
             st.error(f"Error: {e}")
 
+
 def delete_user():
     st.title("Delete User")
-    user_name = st.text_input("Enter user name")
+    users = client.get_users()
+    user_name = st.selectbox("Select user name", users)
     if st.button("Delete User"):
         try:
             client.delete_user(user_name)
@@ -36,9 +41,11 @@ def delete_user():
         except KeyError as e:
             st.error(f"Error: {e}")
 
+
 def get_posts_for_user():
     st.title("Get Posts for User")
-    user_name = st.text_input("Enter user name")
+    users = client.get_users()
+    user_name = st.selectbox("Select user name", users)
     if st.button("Get Posts"):
         try:
             posts = client.get_posts_for_user(user_name)
@@ -48,19 +55,25 @@ def get_posts_for_user():
         except KeyError as e:
             st.error(f"Error: {e}")
 
+
 def get_posts_for_topic():
     st.title("Get Posts for Topic")
-    topic = st.text_input("Enter topic")
+    topics = client.get_topics()
+    topic = st.selectbox("Enter topic", topics)
     if st.button("Get Posts"):
         posts = client.get_posts_for_topic(topic)
         st.write(f"Posts for topic '{topic}':")
         for post in posts:
             st.write(post)
 
+
 def get_trending_topics():
     st.title("Get Trending Topics")
+    current_timestamp = client.get_current_timestamp()
     from_timestamp = st.number_input("Enter from timestamp", min_value=0, step=1)
-    to_timestamp = st.number_input("Enter to timestamp", min_value=0, step=1)
+    to_timestamp = st.number_input(
+        "Enter to timestamp", min_value=0, max_value=current_timestamp, step=1, value=current_timestamp
+    )
     if st.button("Get Trending Topics"):
         try:
             topics = client.get_trending_topics(int(from_timestamp), int(to_timestamp))
@@ -69,6 +82,8 @@ def get_trending_topics():
                 st.write(topic)
         except ValueError as e:
             st.error(f"Error: {e}")
+        st.rerun()
+
 
 def get_all_posts():
     st.title("All Posts")
@@ -83,9 +98,22 @@ def get_all_posts():
         st.markdown(f"{post.content}")
         st.markdown("---")
 
+
 def main():
     st.sidebar.title("Postly\nSimple social media platform")
-    page = st.sidebar.selectbox("Choose an action", ["Add User", "Add Post", "Delete User", "Get Posts for User", "Get Posts for Topic", "Get Trending Topics", "View All Posts"])
+    page = st.sidebar.selectbox(
+        "Choose an action",
+        [
+            "Add User",
+            "Add Post",
+            "Delete User",
+            "Get Posts for User",
+            "Get Posts for Topic",
+            "Get Trending Topics",
+            "View All Posts",
+        ],
+        index=6,
+    )
 
     if page == "Add User":
         add_user()
@@ -101,6 +129,7 @@ def main():
         get_trending_topics()
     elif page == "View All Posts":
         get_all_posts()
+
 
 if __name__ == "__main__":
     main()
