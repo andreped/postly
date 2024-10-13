@@ -3,7 +3,7 @@ title: 'Postly: a simple twitter clone'
 colorFrom: indigo
 colorTo: indigo
 sdk: streamlit
-sdk_version: '1.13.0'
+sdk_version: '1.39.0'
 python_version: '3.10'
 app_port: 7860
 emoji: 🫁
