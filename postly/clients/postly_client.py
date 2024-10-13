@@ -1,4 +1,5 @@
 import re
+import hashlib
 from collections import Counter
 from typing import List
 
@@ -15,6 +16,7 @@ class PostlyClient:
 
     def __init__(self) -> None:
         self.userPosts = {}
+        self.user_passwords = {}
         self.post_max_length = 140
         self.timestamp_iter = 0
 
@@ -30,16 +32,48 @@ class PostlyClient:
         """
         return re.findall(pattern=r"#(\w+)", string=post)
 
-    def add_user(self, user_name: str) -> None:
+    @staticmethod
+    def hash_password(password: str) -> str:
+        """
+        Hash a password using SHA-256.
+
+        Args:
+            password: The password to hash.
+        Returns:
+            The hashed password.
+        """
+        return hashlib.sha256(password.encode()).hexdigest()
+
+    def add_user(self, user_name: str, password: str) -> None:
         """
         Add new user to system.
 
         Args:
             user_name: The name of the user to add.
+            password: The password of the user.
         Returns:
             None
         """
+        if user_name in self.userPosts:
+            raise ValueError(f"User '{user_name}' already exists.")
+        
         self.userPosts[user_name] = []
+        self.user_passwords[user_name] = self.hash_password(password)
+
+    def authenticate_user(self, user_name: str, password: str) -> bool:
+        """
+        Authenticate a user.
+
+        Args:
+            user_name: The name of the user.
+            password: The password of the user.
+        Returns:
+            True if authentication is successful, False otherwise.
+        """
+        if user_name in self.user_passwords:
+            hashed_password = self.hash_password(password)
+            return self.user_passwords[user_name] == hashed_password
+        return False
 
     def add_post(self, user_name: str, post_text: str) -> None:
         """
@@ -78,6 +112,7 @@ class PostlyClient:
             raise KeyError(f"User '{user_name}' not found.")
 
         self.userPosts.pop(user_name, None)
+        self.user_passwords.pop(user_name, None)
 
     def get_users(self):
         """
@@ -177,5 +212,6 @@ class PostlyClient:
                 if from_timestamp <= post_data.timestamp <= to_timestamp:
                     topics_frequency.update(post_data.topics)
 
-        # retriev top topics in descending order
+        # retrieve top topics in descending order
         return [topic for topic, _ in topics_frequency.most_common()]
+    
