@@ -1,7 +1,7 @@
-from postly.clients import PostlyClient
+from postly.clients.postly_client import PostlyClient
 
 
-class TestYodelrSystem:
+class TestPlotlyClient:
     def setup_method(self):
         self.postly_instance = PostlyClient()
 
@@ -50,7 +50,7 @@ class TestYodelrSystem:
         assert trending_topics == ["steak"]
 
     def test_delete_user(self):
-        temporary_postly_instance = postlyClient()
+        temporary_postly_instance = PostlyClient()
         temporary_postly_instance.add_user("simon")
         temporary_postly_instance.add_post("simon", "just #coding today", 1)
 
