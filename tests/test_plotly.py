@@ -15,8 +15,8 @@ class TestPlotlyClient:
 
         # add toy data for testing
         self.postly_instance.add_user("john")
-        for i, post in enumerate(self.gt_posts):
-            self.postly_instance.add_post("john", post, i)
+        for post in self.gt_posts:
+            self.postly_instance.add_post("john", post)
     
     def test_add_user(self):
         assert "john" in self.postly_instance.userPosts
@@ -52,7 +52,7 @@ class TestPlotlyClient:
     def test_delete_user(self):
         temporary_postly_instance = PostlyClient()
         temporary_postly_instance.add_user("simon")
-        temporary_postly_instance.add_post("simon", "just #coding today", 1)
+        temporary_postly_instance.add_post("simon", "just #coding today")
 
         assert "simon" in temporary_postly_instance.userPosts
         
