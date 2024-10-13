@@ -1,5 +1,5 @@
-import re
 import hashlib
+import re
 from collections import Counter
 from typing import List
 
@@ -56,7 +56,7 @@ class PostlyClient:
         """
         if user_name in self.userPosts:
             raise ValueError(f"User '{user_name}' already exists.")
-        
+
         self.userPosts[user_name] = []
         self.user_passwords[user_name] = self.hash_password(password)
 
@@ -214,4 +214,3 @@ class PostlyClient:
 
         # retrieve top topics in descending order
         return [topic for topic, _ in topics_frequency.most_common()]
-    

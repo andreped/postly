@@ -1,4 +1,5 @@
 import streamlit as st
+
 from postly.clients.postly_client import PostlyClient
 
 # Initialize the PostlyClient in Streamlit's session state
@@ -12,6 +13,7 @@ if "logged_in" not in st.session_state:
     st.session_state.logged_in = False
 if "current_user" not in st.session_state:
     st.session_state.current_user = None
+
 
 def register():
     st.title("Register")
@@ -30,6 +32,7 @@ def register():
         else:
             st.error("Please enter both user name and password.")
 
+
 def login():
     st.title("Login")
     user_name = st.text_input("Enter user name")
@@ -43,11 +46,13 @@ def login():
         else:
             st.error("Invalid user name or password.")
 
+
 def logout():
     st.session_state.logged_in = False
     st.session_state.current_user = None
     st.success("Logged out successfully.")
     st.rerun()
+
 
 def delete_own_user():
     st.title("Delete Account")
@@ -59,6 +64,7 @@ def delete_own_user():
         except KeyError as e:
             st.error(f"Error: {e}")
 
+
 def add_post():
     st.title("Add Post")
     post_text = st.text_area("Enter post text")
@@ -68,6 +74,7 @@ def add_post():
             st.success("Post added successfully.")
         except Exception as e:
             st.error(f"Error: {e}")
+
 
 def get_posts_for_user():
     st.title("Get Posts for User")
@@ -82,6 +89,7 @@ def get_posts_for_user():
         except KeyError as e:
             st.error(f"Error: {e}")
 
+
 def get_posts_for_topic():
     st.title("Get Posts for Topic")
     topics = client.get_topics()
@@ -91,6 +99,7 @@ def get_posts_for_topic():
         st.write(f"Posts for topic '{topic}':")
         for post in posts:
             st.write(post)
+
 
 def get_trending_topics():
     st.title("Get Trending Topics")
@@ -108,6 +117,7 @@ def get_trending_topics():
         except ValueError as e:
             st.error(f"Error: {e}")
 
+
 def get_all_posts():
     st.title("All Posts")
     posts = client.get_posts()
@@ -120,6 +130,7 @@ def get_all_posts():
         st.markdown(f"**{user_name}**")
         st.markdown(f"{post.content}")
         st.markdown("---")
+
 
 def main():
     st.sidebar.title("Postly\nSimple social media platform")
@@ -158,6 +169,7 @@ def main():
             login()
         elif page == "Register":
             register()
+
 
 if __name__ == "__main__":
     main()
