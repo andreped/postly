@@ -4,6 +4,7 @@ colorFrom: indigo
 colorTo: indigo
 sdk: streamlit
 sdk_version: 1.13.0
+python_version: 3.10
 app_port: 7860
 emoji: 🫁
 pinned: false
@@ -17,7 +18,7 @@ This repository contain the Postly client, which serves as a micro-message commu
 
 ## Getting started
 
-Implemented client requires only Python 3.x, no additional requirements.
+Implemented client requires only Python >=3.7, no additional requirements.
 
 To use client, simply do something like this:
 ```
