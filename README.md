@@ -21,7 +21,7 @@ This repository contain the Postly client, which serves as a micro-message commu
 
 To access the live demo, click on the `Hugging Face` badge above. Below is a snapshot of the current state of the demo app.
 
-<img width="1400" alt="Screenshot" src="https://github.com/andreped/assets/postly_image.png">
+<img width="1400" alt="Screenshot" src="assets/streamlit-app-demo.png">
 
 ## Getting started
 
