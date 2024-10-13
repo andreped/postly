@@ -1,5 +1,6 @@
 from .postly_client import PostlyClient
 
+
 class SingletonPostlyClient:
     _instance = None
 

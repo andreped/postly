@@ -1,4 +1,5 @@
 import streamlit as st
+
 from postly.clients.singleton_client import SingletonPostlyClient
 
 # Initialize the PostlyClient singleton
