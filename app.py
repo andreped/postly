@@ -84,7 +84,7 @@ def get_all_posts():
         st.markdown("---")
 
 def main():
-    st.sidebar.title("Simple Twitter Clone")
+    st.sidebar.title("Postly\nSimple social media platform")
     page = st.sidebar.selectbox("Choose an action", ["Add User", "Add Post", "Delete User", "Get Posts for User", "Get Posts for Topic", "Get Trending Topics", "View All Posts"])
 
     if page == "Add User":
