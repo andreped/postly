@@ -14,6 +14,9 @@ app_file: app.py
 
 # Postly
 
+[![license](https://img.shields.io/github/license/DAVFoundation/captain-n3m0.svg?style=flat-square)](https://github.com/andreped/postly/blob/main/LICENSE.md)
+<a target="_blank" href="https://huggingface.co/spaces/andreped/postly"><img src="https://img.shields.io/badge/🤗%20Hugging%20Face-Spaces-yellow.svg"></a>
+
 This repository contain the Postly client, which serves as a micro-message communication platform, similar to Twitter.
 
 <img width="1400" alt="Screenshot 2023-10-31 at 01 34 47" src="https://github.com/andreped/assets/postly_image.png">
