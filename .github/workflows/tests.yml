@@ -1,0 +1,27 @@
+name: Tests
+
+on:
+  push:
+    branches:
+      - '**'
+
+jobs:
+  tests:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      
+      - name: Set up Python 3.6
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.6"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+      
+      - name: Check formatting
+        run: sh shell/lint.sh
+      
+      - name: Run tests
+        run: pytest -v tests/
