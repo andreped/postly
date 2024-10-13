@@ -16,15 +16,18 @@ app_file: app.py
 
 This repository contain the Postly client, which serves as a micro-message communication platform, similar to Twitter.
 
+<img width="1400" alt="Screenshot 2023-10-31 at 01 34 47" src="https://github.com/andreped/assets/postly_image.png">
+
 ## Getting started
 
-Implemented client requires only Python >=3.7, no additional requirements.
-
-To use client, simply do something like this:
+Install dependencies:
 ```
-from postly.clients import PostlyClient
+pip install -r requirements.txt
+```
 
-postly_instance = PostlyClient()
+Run streamlit app:
+```
+streamlit run app.py
 ```
 
 ## Testing
