@@ -41,14 +41,13 @@ class PostlyClient:
         """
         self.userPosts[user_name] = []
 
-    def add_post(self, user_name: str, post_text: str, timestamp: int) -> None:
+    def add_post(self, user_name: str, post_text: str) -> None:
         """
         Add new post to the user's post history.
 
         Args:
             user_name: The name of the user to add the post to.
             post_text: The text of the post.
-            timestamp: The timestamp of the post.
         Returns:
             None
         """
@@ -60,9 +59,6 @@ class PostlyClient:
 
         if not post_text.strip():
             raise ValueError("Post cannot be empty.")
-
-        if not isinstance(timestamp, int) or timestamp < 0:
-            raise ValueError("Timestamp must be a non-negative integer.")
 
         self.timestamp_iter += 1
         curr_topics = self.get_topics_from_post(post_text)
@@ -82,6 +78,24 @@ class PostlyClient:
             raise KeyError(f"User '{user_name}' not found.")
 
         self.userPosts.pop(user_name, None)
+    
+    def get_users(self):
+        """
+        Get all users.
+        
+        Returns:
+            A list of users.
+        """
+        return list(self.userPosts.keys())
+    
+    def get_posts(self):
+        """
+        Get all posts for all users.
+        
+        Returns:
+            A dictionary of posts.
+        """
+        return self.userPosts
 
     def get_posts_for_user(self, user_name: str) -> List[str]:
         """
