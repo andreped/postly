@@ -78,24 +78,47 @@ class PostlyClient:
             raise KeyError(f"User '{user_name}' not found.")
 
         self.userPosts.pop(user_name, None)
-    
+
     def get_users(self):
         """
         Get all users.
-        
+
         Returns:
             A list of users.
         """
         return list(self.userPosts.keys())
-    
+
     def get_posts(self):
         """
         Get all posts for all users.
-        
+
         Returns:
             A dictionary of posts.
         """
         return self.userPosts
+
+    def get_topics(self) -> List[str]:
+        """
+        Get all topics.
+
+        Returns:
+            A list of topics.
+        """
+        topics = set()
+        for user in self.userPosts:
+            for post_data in self.userPosts[user]:
+                topics.update(post_data.topics)
+
+        return list(topics)
+
+    def get_current_timestamp(self) -> int:
+        """
+        Get the current timestamp.
+
+        Returns:
+            The current timestamp.
+        """
+        return self.timestamp_iter
 
     def get_posts_for_user(self, user_name: str) -> List[str]:
         """
