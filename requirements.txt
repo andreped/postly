@@ -4,3 +4,4 @@ black
 pydantic
 pytest
 altair<5
+streamlit>=1.39.0
