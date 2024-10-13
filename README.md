@@ -1,3 +1,15 @@
+---
+title: 'Postly: a simple twitter clone'
+colorFrom: indigo
+colorTo: indigo
+sdk: streamlit
+app_port: 7860
+emoji: 🫁
+pinned: false
+license: mit
+app_file: app.py
+---
+
 # Postly
 
 This repository contain the Postly client, which serves as a micro-message communication platform, similar to Twitter.
