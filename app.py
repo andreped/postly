@@ -59,7 +59,7 @@ def logout():
 
 
 def delete_own_user():
-    st.title("Delete Account")
+    st.title("Delete Account ❌")
     if st.button("Delete Account"):
         try:
             client.delete_user(st.session_state.current_user)
@@ -70,7 +70,7 @@ def delete_own_user():
 
 
 def get_posts_for_user():
-    st.title("Get Posts for User")
+    st.title("Get Posts for User 🔎")
     users = client.get_users()
     user_name = st.selectbox("Select user name", users)
     if st.button("Get Posts"):
@@ -84,7 +84,7 @@ def get_posts_for_user():
 
 
 def get_posts_for_topic():
-    st.title("Get Posts for Topic")
+    st.title("Get Posts for Topic 🔎")
     topics = client.get_topics()
     topic = st.selectbox("Enter topic", topics)
     if st.button("Get Posts"):
@@ -95,7 +95,7 @@ def get_posts_for_topic():
 
 
 def get_trending_topics():
-    st.title("Get Trending Topics")
+    st.title("Get Trending Topics 📊")
     current_timestamp = client.get_current_timestamp()
     from_timestamp = st.number_input("Enter from timestamp", min_value=0, step=1)
     to_timestamp = st.number_input(
@@ -115,8 +115,8 @@ def get_all_posts():
     st.title("Feed")
 
     # Add post section at the top
-    post_text = st.text_area("What's happening?", key="new_post_text")
-    if st.button("Add Post"):
+    post_text = st.text_area("What's happening? 💬", key="new_post_text")
+    if st.button("Add Post 🖊️"):
         try:
             client.add_post(st.session_state.current_user, post_text)
             st.success("Post added successfully.")
@@ -153,9 +153,9 @@ def get_all_posts():
                 client.like_post(st.session_state.current_user, post.timestamp)
                 st.rerun()
 
-
 def main():
-    st.sidebar.title("Postly\nSimple social media platform")
+    st.sidebar.title("Postly 📝\nSimple social media platform")
+
     if st.session_state.logged_in:
         st.sidebar.write(f"Logged in as: {st.session_state.current_user}")
         if st.sidebar.button("Logout"):
@@ -188,6 +188,20 @@ def main():
             register()
         elif page == "Login":
             login()
+    
+    st.sidebar.markdown("""
+        **About Postly**
+        
+        Welcome to Postly, a simple social media platform created for fun. This app allows different users to share posts and like each other's posts.
+
+        **Important Information**
+        
+        - The entire app is kept in global memory for all users accessing the app on the same instance.
+        - Do not use a username and password actually used with any other apps.
+        - We hash the password, but no real attempt to make a bulletproof solution was made.
+        """
+    )
+
 
 
 if __name__ == "__main__":
