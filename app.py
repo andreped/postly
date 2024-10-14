@@ -134,7 +134,7 @@ def get_all_posts():
     for user_name, post in sorted_posts:
         liked = st.session_state.current_user in post.liked_by
         like_button_label = "👍" if not liked else "👎"
-        
+
         col1, col2 = st.columns([4, 1])
         with col1:
             st.markdown(
@@ -152,6 +152,7 @@ def get_all_posts():
             if st.button(like_button_label, key=f"like_{post.timestamp}"):
                 client.like_post(st.session_state.current_user, post.timestamp)
                 st.rerun()
+
 
 def main():
     st.sidebar.title("Postly 📝\nSimple social media platform")
@@ -188,20 +189,21 @@ def main():
             register()
         elif page == "Login":
             login()
-    
-    st.sidebar.markdown("""
+
+    st.sidebar.markdown(
+        """
         **About Postly**
-        
-        Welcome to Postly, a simple social media platform created for fun. This app allows different users to share posts and like each other's posts.
+
+        Welcome to Postly, a simple social media platform created for fun.
+        This app allows different users to share posts and like each other's posts.
 
         **Important Information**
-        
+
         - The entire app is kept in global memory for all users accessing the app on the same instance.
         - Do not use a username and password actually used with any other apps.
         - We hash the password, but no real attempt to make a bulletproof solution was made.
         """
     )
-
 
 
 if __name__ == "__main__":
