@@ -69,17 +69,6 @@ def delete_own_user():
             st.error(f"Error: {e}")
 
 
-def add_post():
-    st.title("Add Post")
-    post_text = st.text_area("Enter post text", placeholder="What's happening?")
-    if st.button("Add Post"):
-        try:
-            client.add_post(st.session_state.current_user, post_text)
-            st.success("Post added successfully.")
-        except Exception as e:
-            st.error(f"Error: {e}")
-
-
 def get_posts_for_user():
     st.title("Get Posts for User")
     users = client.get_users()
@@ -89,7 +78,7 @@ def get_posts_for_user():
             posts = client.get_posts_for_user(user_name)
             st.write(f"Posts for user '{user_name}':")
             for post in posts:
-                st.markdown(f"**{user_name}**: {post.content} - *{post.timestamp}*")
+                st.markdown(post)
         except KeyError as e:
             st.error(f"Error: {e}")
 
@@ -123,7 +112,19 @@ def get_trending_topics():
 
 
 def get_all_posts():
-    st.title("All Posts")
+    st.title("Feed")
+
+    # Add post section at the top
+    post_text = st.text_area("What's happening?", key="new_post_text")
+    if st.button("Add Post"):
+        try:
+            client.add_post(st.session_state.current_user, post_text)
+            st.success("Post added successfully.")
+            st.rerun()
+        except Exception as e:
+            st.error(f"Error: {e}")
+
+    # Display all posts
     posts = client.get_posts()
     all_posts = []
     for user_name, user_posts in posts.items():
@@ -152,18 +153,17 @@ def main():
         page = st.sidebar.selectbox(
             "Choose an action",
             [
-                "Add Post",
+                "View All Posts",
                 "Delete Account",
                 "Get Posts for User",
                 "Get Posts for Topic",
                 "Get Trending Topics",
-                "View All Posts",
             ],
-            index=5,
+            index=0,
         )
 
-        if page == "Add Post":
-            add_post()
+        if page == "View All Posts":
+            get_all_posts()
         elif page == "Delete Account":
             delete_own_user()
         elif page == "Get Posts for User":
@@ -172,8 +172,6 @@ def main():
             get_posts_for_topic()
         elif page == "Get Trending Topics":
             get_trending_topics()
-        elif page == "View All Posts":
-            get_all_posts()
     else:
         page = st.sidebar.selectbox("Choose an action", ["Login", "Register"], index=0)
         if page == "Login":
