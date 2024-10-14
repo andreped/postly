@@ -91,7 +91,7 @@ def get_posts_for_topic():
         posts = client.get_posts_for_topic(topic)
         st.write(f"Posts for topic '{topic}':")
         for post in posts:
-            st.markdown(f"**{post.user_name}**: {post.content} - *{post.timestamp}*")
+            st.markdown(post)
 
 
 def get_trending_topics():
@@ -132,16 +132,26 @@ def get_all_posts():
             all_posts.append((user_name, post))
     sorted_posts = sorted(all_posts, key=lambda x: x[1].timestamp)[::-1]
     for user_name, post in sorted_posts:
-        st.markdown(
-            f"""
-        <div class="post-container">
-            <div class="post-header">{user_name}</div>
-            <div class="post-content">{post.content}</div>
-            <div class="post-timestamp">{post.timestamp}</div>
-        </div>
-        """,
-            unsafe_allow_html=True,
-        )
+        liked = st.session_state.current_user in post.liked_by
+        like_button_label = "👍" if not liked else "👎"
+        
+        col1, col2 = st.columns([4, 1])
+        with col1:
+            st.markdown(
+                f"""
+                <div class="post-container">
+                    <div class="post-header">{user_name}</div>
+                    <div class="post-content">{post.content}</div>
+                    <div class="post-timestamp">{post.timestamp}</div>
+                    <div class="post-likes">Likes: {post.likes}</div>
+                </div>
+                """,
+                unsafe_allow_html=True,
+            )
+        with col2:
+            if st.button(like_button_label, key=f"like_{post.timestamp}"):
+                client.like_post(st.session_state.current_user, post.timestamp)
+                st.rerun()
 
 
 def main():
