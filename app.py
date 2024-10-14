@@ -122,7 +122,7 @@ def get_all_posts():
     for user_name, user_posts in posts.items():
         for post in user_posts:
             all_posts.append((user_name, post))
-    sorted_posts = sorted(all_posts, key=lambda x: x[1].timestamp)
+    sorted_posts = sorted(all_posts, key=lambda x: x[1].timestamp)[::-1]
     for user_name, post in sorted_posts:
         st.markdown(f"**{user_name}**")
         st.markdown(f"{post.content}")
