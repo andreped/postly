@@ -1,9 +1,16 @@
 import streamlit as st
 
 from postly.clients.singleton_client import SingletonPostlyClient
+from postly.common.css import get_theme
 
 # Initialize the PostlyClient singleton
 client = SingletonPostlyClient.get_instance()
+
+# Custom CSS for Twitter-like feel
+st.markdown(
+    get_theme(),
+    unsafe_allow_html=True
+)
 
 # Initialize user session state
 if "logged_in" not in st.session_state:
@@ -124,9 +131,12 @@ def get_all_posts():
             all_posts.append((user_name, post))
     sorted_posts = sorted(all_posts, key=lambda x: x[1].timestamp)[::-1]
     for user_name, post in sorted_posts:
-        st.markdown(f"**{user_name}**")
-        st.markdown(f"{post.content}")
-        st.markdown("---")
+        st.markdown(f"""
+        <div class="post-container">
+            <div class="post-header">{user_name}</div>
+            <div class="post-content">{post.content}</div>
+        </div>
+        """, unsafe_allow_html=True)
 
 
 def main():
