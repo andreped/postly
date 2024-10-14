@@ -24,6 +24,8 @@ def get_theme():
         padding: 10px;
         margin-bottom: 10px;
         background-color: #f5f8fa;
+        min-height: 100px; /* Adjust this value as needed */
+        position: relative; /* Ensure absolute positioning works within this container */
     }
     .post-header {
         font-weight: bold;
@@ -31,6 +33,20 @@ def get_theme():
     }
     .post-content {
         color: #14171A;
+    }
+    .post-likes {
+        color: #657786;
+        font-size: 14px;
+        position: absolute;
+        bottom: 10px;
+        right: 10px;
+    }
+    .like-button {
+        background-color: transparent;
+        border: none;
+        color: #1DA1F2;
+        cursor: pointer;
+        font-size: 20px;
     }
     </style>
     """
