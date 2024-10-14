@@ -214,3 +214,36 @@ class PostlyClient:
 
         # retrieve top topics in descending order
         return [topic for topic, _ in topics_frequency.most_common()]
+
+    def like_post(self, user_name: str, post_id: int) -> None:
+        """
+        Like or unlike a post.
+
+        Args:
+            user_name: The name of the user liking the post.
+            post_id: The ID of the post to like or unlike.
+        Returns:
+            None
+        """
+        post = self.get_post_by_id(post_id)
+        if user_name in post.liked_by:
+            post.liked_by.remove(user_name)
+            post.likes -= 1
+        else:
+            post.liked_by.add(user_name)
+            post.likes += 1
+
+    def get_post_by_id(self, post_id: int) -> Post:
+        """
+        Get a post by its ID.
+
+        Args:
+            post_id: The ID of the post to retrieve.
+        Returns:
+            The post with the given ID.
+        """
+        for user_posts in self.userPosts.values():
+            for post in user_posts:
+                if post.timestamp == post_id:
+                    return post
+        raise KeyError("Post not found")
