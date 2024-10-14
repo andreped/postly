@@ -21,8 +21,8 @@ if "current_user" not in st.session_state:
 
 def register():
     st.title("Register")
-    user_name = st.text_input("Enter user name")
-    password = st.text_input("Enter password", type="password")
+    user_name = st.text_input("Enter user name", placeholder="Username")
+    password = st.text_input("Enter password", type="password", placeholder="Password")
     if st.button("Register"):
         if user_name and password:
             try:
@@ -39,8 +39,8 @@ def register():
 
 def login():
     st.title("Login")
-    user_name = st.text_input("Enter user name")
-    password = st.text_input("Enter password", type="password")
+    user_name = st.text_input("Enter user name", placeholder="Username")
+    password = st.text_input("Enter password", type="password", placeholder="Password")
     if st.button("Login"):
         if client.authenticate_user(user_name, password):
             st.session_state.logged_in = True
@@ -71,7 +71,7 @@ def delete_own_user():
 
 def add_post():
     st.title("Add Post")
-    post_text = st.text_area("Enter post text")
+    post_text = st.text_area("Enter post text", placeholder="What's happening?")
     if st.button("Add Post"):
         try:
             client.add_post(st.session_state.current_user, post_text)
@@ -89,7 +89,7 @@ def get_posts_for_user():
             posts = client.get_posts_for_user(user_name)
             st.write(f"Posts for user '{user_name}':")
             for post in posts:
-                st.write(post)
+                st.markdown(f"**{user_name}**: {post.content} - *{post.timestamp}*")
         except KeyError as e:
             st.error(f"Error: {e}")
 
@@ -102,7 +102,7 @@ def get_posts_for_topic():
         posts = client.get_posts_for_topic(topic)
         st.write(f"Posts for topic '{topic}':")
         for post in posts:
-            st.write(post)
+            st.markdown(f"**{post.user_name}**: {post.content} - *{post.timestamp}*")
 
 
 def get_trending_topics():
@@ -136,6 +136,7 @@ def get_all_posts():
         <div class="post-container">
             <div class="post-header">{user_name}</div>
             <div class="post-content">{post.content}</div>
+            <div class="post-timestamp">{post.timestamp}</div>
         </div>
         """,
             unsafe_allow_html=True,
