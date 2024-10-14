@@ -183,11 +183,11 @@ def main():
         elif page == "Get Trending Topics":
             get_trending_topics()
     else:
-        page = st.sidebar.selectbox("Choose an action", ["Login", "Register"], index=0)
-        if page == "Login":
-            login()
-        elif page == "Register":
+        page = st.sidebar.selectbox("Choose an action", ["Register", "Login"], index=0)
+        if page == "Register":
             register()
+        elif page == "Login":
+            login()
 
 
 if __name__ == "__main__":
